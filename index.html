@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cookies!</title>
+    <style>
+        .cookieBody {
+            background-color: black;
+            text-align: center;
+        }
+
+        .cookieText {
+            color: white;
+            font-size: 32px;
+        }
+
+        .cookieButton {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 25px;
+            text-align: center;
+            font-size: 32px;
+            cursor: pointer;
+        }
+
+        .cookieButton:hover {
+            background-color: green;
+        }
+
+        .cookieImpressum {
+            color: grey;
+            font-size: 10px;
+            margin-top: 1cm;
+        }
+    </style>
+</head>
+
+<body class="cookieBody">
+
+    <p id="mainText" class="cookieText">Please confirm the cookie!</p>
+    <button id="cookieButton" class="cookieButton">This is not the confirmation button</button>
+    <p class="cookieImpressum">Impressum: Tobias Borgert, Sonnenbergstr. 44, 88045 Friedrichshafen, Telefon +49 175 9741856</p>
+
+    <script>
+        function eatCookie() {
+            setCookie("cookie_type", "", 0);
+            document.getElementById("mainText").innerHTML = "You have eaten your cookie. Reload the page to get a new one.";
+            document.getElementById("cookieButton").hidden = true;
+        }
+
+        function setCookie(cname, cvalue, exdays) {
+            let d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            const expires = "expires="+d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+            const name = cname + "=";
+            const ca = document.cookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function checkCookie() {
+            const cookie_types = ["traditional spicy Christmas",
+                                "half-baked dark chocolate",
+                                "half-baked white chocolate",
+                                "half-baked hazelnut",
+                                "crispy chocolate",
+                                "shortbread",
+                                "shortbread with chocolate coating",
+                                "soft cake with orange filling",
+                                "soft cake with cherry filling",
+                                "Oreo"];
+            let cookie_type = getCookie("cookie_type");
+            if (cookie_type != "") {
+                document.getElementById("mainText").innerHTML = "You already have a " + cookie_type + " cookie!";
+                document.getElementById("cookieButton").innerHTML = "Eat cookie";
+                document.getElementById("cookieButton").onclick = eatCookie;
+            } else {
+                cookie_type = cookie_types[Math.floor(Math.random() * 10)];
+                if (cookie_type != "" && cookie_type != null) {
+                    if(confirm("This page will give you a cookie. The cookie is not used for aynthing, it is just for you. Accept the cookie?")) {
+                        setCookie("cookie_type", cookie_type, 1);
+                        document.getElementById("mainText").innerHTML = "You now have a " + cookie_type + " cookie!";
+                        document.getElementById("cookieButton").innerHTML = "Eat cookie";
+                        document.getElementById("cookieButton").onclick = eatCookie;
+                    }
+                    else {
+                        document.getElementById("mainText").innerHTML = "You refused the cookie. Reload the page if you change your mind.";
+                        document.getElementById("cookieButton").hidden = true;
+                    }
+                }
+            }
+        }
+
+        window.onload = checkCookie;
+    </script>
+
+</body>
+
+</html>
