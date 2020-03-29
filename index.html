@@ -38,8 +38,8 @@
 
 <body class="cookieBody">
 
-    <p id="mainText" class="cookieText">Please confirm the cookie!</p>
-    <button id="cookieButton" class="cookieButton">This is not the confirmation button</button>
+    <p id="mainText" class="cookieText">This page requires Javascript.</p>
+    <button id="cookieButton" class="cookieButton">This button requires Javascript</button>
     <p class="cookieImpressum">Impressum: Tobias Borgert, Sonnenbergstr. 44, 88045 Friedrichshafen, Telefon +49 175 9741856</p>
 
     <script>
@@ -72,27 +72,29 @@
         }
 
         function checkCookie() {
-            const cookie_types = ["traditional spicy Christmas",
-                                "half-baked dark chocolate",
-                                "half-baked white chocolate",
-                                "half-baked hazelnut",
-                                "crispy chocolate",
-                                "shortbread",
-                                "shortbread with chocolate coating",
-                                "soft cake with orange filling",
-                                "soft cake with cherry filling",
-                                "Oreo"];
+            const cookie_types = ["a traditional spicy Christmas",
+                                "a half-baked dark chocolate",
+                                "a half-baked white chocolate",
+                                "a half-baked hazelnut",
+                                "a crispy chocolate",
+                                "a shortbread",
+                                "a shortbread with chocolate coating",
+                                "a soft cake with orange filling",
+                                "a soft cake with cherry filling",
+                                "an Oreo"];
             let cookie_type = getCookie("cookie_type");
             if (cookie_type != "") {
-                document.getElementById("mainText").innerHTML = "You already have a " + cookie_type + " cookie!";
+                document.getElementById("mainText").innerHTML = "You already have " + cookie_type + " cookie!";
                 document.getElementById("cookieButton").innerHTML = "Eat cookie";
                 document.getElementById("cookieButton").onclick = eatCookie;
             } else {
                 cookie_type = cookie_types[Math.floor(Math.random() * 10)];
                 if (cookie_type != "" && cookie_type != null) {
+                    document.getElementById("mainText").innerHTML = "Please confirm the cookie!";
+                    document.getElementById("cookieButton").innerHTML = "This is not the confirmation button";
                     if(confirm("This page will give you a cookie. The cookie is not used for aynthing, it is just for you. Accept the cookie?")) {
                         setCookie("cookie_type", cookie_type, 1);
-                        document.getElementById("mainText").innerHTML = "You now have a " + cookie_type + " cookie!";
+                        document.getElementById("mainText").innerHTML = "You now have " + cookie_type + " cookie!";
                         document.getElementById("cookieButton").innerHTML = "Eat cookie";
                         document.getElementById("cookieButton").onclick = eatCookie;
                     }
